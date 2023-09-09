@@ -1,0 +1,9 @@
+package br.com.clicanicaodontologica.clinica.domain.repository;
+
+import br.com.clicanicaodontologica.clinica.domain.entity.Clinica;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.UUID;
+
+public interface ClinicaRepository extends JpaRepository<Clinica, UUID> {
+}

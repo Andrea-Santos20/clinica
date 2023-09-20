@@ -20,19 +20,29 @@ public class Paciente {
     private String nome;
     private LocalDate dataNascimento;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_endereco" ,
+    @JoinColumn(name = "id_endereco",
             referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "fk_clinica_endereco"))
     private Endereco endereco;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_contato" ,
+    @JoinColumn(name = "id_contato",
             referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "fk_clinica_contato"))
     private Contato contato;
     private GeneroEnum genero;
+    @Column(updatable = false)
     private Instant createdAt;
     private Instant updateAt;
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_paciente")
-    private Set<Consulta> consultas;
+
+
+    @PrePersist
+    public void naCriacao() {
+        this.createdAt = Instant.now();
+    }
+
+    @PreUpdate
+    public void naAtualizacao() {
+        this.updateAt = Instant.now();
+    }
+
 }

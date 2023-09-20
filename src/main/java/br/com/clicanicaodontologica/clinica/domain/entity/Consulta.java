@@ -15,19 +15,37 @@ import java.util.UUID;
 public class Consulta {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column
+    @Column(name="id")
     private UUID id;
+    @ManyToOne
+    @JoinColumn(name="paciente_id",
+            foreignKey = @ForeignKey(
+                    name="fk_consulta_paciente"))
     private Paciente paciente;
+    @ManyToOne
+    @JoinColumn(name="dentista_id",
+            foreignKey = @ForeignKey(
+                    name="fk_consulta_dentista"))
     private Dentista dentista;
+    @ManyToOne
+    @JoinColumn(name="clinica_id",
+            foreignKey = @ForeignKey(
+                    name="fk_consulta_clinica"))
     private Clinica clinica;
-    private LocalDate descricao;
+    private LocalDate dataConsulta;
+    @Column(updatable = false)
+    private String descricao;
     private Boolean cancelada;
     @Column(length = 80)
     private String motivoCancelamento;
     private Instant createdAt;
     private Instant updateAt;
-
-
-
-
+    @PrePersist
+    public void naCriacao() {
+        this.createdAt = Instant.now();
+    }
+    @PreUpdate
+    public void naAtualizacao() {
+        this.updateAt = Instant.now();
+    }
 }

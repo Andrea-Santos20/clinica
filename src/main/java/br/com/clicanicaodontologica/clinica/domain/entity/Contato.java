@@ -15,12 +15,21 @@ import java.util.UUID;
 public class Contato {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name="id")
     private UUID id;
     @Column(length = 100)
     @Email
     private String email;
-    @Column(length = 150)
+    @Column(length = 15)
     private String telefone;
     private Instant createdAt;
     private Instant updateAt;
+    @PrePersist
+    public void naCriacao() {
+        this.createdAt = Instant.now();
+    }
+    @PreUpdate
+    public void naAtualizacao() {
+        this.updateAt = Instant.now();
+    }
 }

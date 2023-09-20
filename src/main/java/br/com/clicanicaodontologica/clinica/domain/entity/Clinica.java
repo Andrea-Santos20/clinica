@@ -1,19 +1,19 @@
 package br.com.clicanicaodontologica.clinica.domain.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
+import org.hibernate.validator.constraints.br.CNPJ;
 
 import java.time.Instant;
-import java.time.LocalDate;
-import java.util.Set;
 import java.util.UUID;
+
+;
 
 @Getter
 @Setter
 @Entity
-@ToString
 @Table(name = "clinicas")
 public class Clinica {
     @Id
@@ -21,9 +21,10 @@ public class Clinica {
     @Column(name="id")
     private UUID id;
     private String nome;
-    @Column(length = 100)
+    @Column(length = 20, unique = true)
     private String cnpj;
     private String razaoSocial;
+    @Column(updatable = false)
     private Instant createdAt;
     private Instant updateAt;
     private String descricao;
@@ -31,13 +32,20 @@ public class Clinica {
     @JoinColumn(name = "id_endereco" ,
             referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "fk_clinica_endereco"))
-    private UUID enderecoId;
+    private Endereco endereco;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_contato" ,
-            referencedColumnName = "id")
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name="fk_clinica_contato"))
     private Contato contato;
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_clinica")
-    private Set<Consulta> consultas;
+
+    @PrePersist
+    public void naCriacao() {
+        this.createdAt = Instant.now();
+    }
+    @PreUpdate
+    public void naAtualizacao() {
+        this.updateAt = Instant.now();
+    }
 
 }

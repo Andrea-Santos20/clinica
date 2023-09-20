@@ -22,9 +22,15 @@ public class Dentista {
     private Instant dataNascimento;
     @Column(length = 80)
     private EspecialidadeEnum especialidade;
-    private GeneroEnum sexo;
+    private GeneroEnum genero;
+    @Column(updatable = false)
+    private Instant createdAt;
+    private Instant updateAt;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_contato" , referencedColumnName = "id")
+    @JoinColumn(name = "id_contato" ,
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(
+                    name="fk_dentista_contato"))
     private Contato contato;
     @ManyToMany
     @JoinTable(
@@ -33,11 +39,13 @@ public class Dentista {
             inverseJoinColumns = @JoinColumn(name = "id_clinica"),
             foreignKey = @ForeignKey(name = "fk_clinica_dentista")
     )
-     private Set<Clinica> clinicasDentistas;
-     private Instant createdAt;
-     private Instant updateAt;
-     @OneToMany(cascade = CascadeType.ALL)
-     @JoinColumn(name = "id_dentista")
-     private Set<Consulta> consultas;
 
+     private Set<Clinica> clinicaDentista;
+    public void naCriacao() {
+        this.createdAt = Instant.now();
+    }
+    @PreUpdate
+    public void naAtualizacao() {
+        this.updateAt = Instant.now();
+    }
 }

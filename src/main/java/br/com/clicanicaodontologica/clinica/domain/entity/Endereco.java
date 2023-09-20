@@ -24,8 +24,17 @@ public class Endereco {
     private String cidade;
     @Column(length = 100)
     private String estado;
-    @Column(length = 100)
+    @Column(length = 10)
     private String cep;
+    @Column(updatable = false)
     private Instant createdAt;
     private Instant updateAt;
+    @PrePersist
+    public void naCriacao() {
+        this.createdAt = Instant.now();
+    }
+    @PreUpdate
+    public void naAtualizacao() {
+        this.updateAt = Instant.now();
+    }
 }

@@ -2,10 +2,14 @@ package br.com.clicanicaodontologica.clinica.api.controller;
 
 import br.com.clicanicaodontologica.clinica.api.dto.request.ClinicaRequest;
 import br.com.clicanicaodontologica.clinica.api.dto.response.ClinicaResponse;
+import br.com.clicanicaodontologica.clinica.api.dto.response.ContatoResponse;
+import br.com.clicanicaodontologica.clinica.api.dto.response.EnderecoResponse;
 import br.com.clicanicaodontologica.clinica.api.dto.response.listResponse.ClinicaListResponse;
+import br.com.clicanicaodontologica.clinica.api.dto.response.wrapperResponse.ClinicaWrapperResponse;
 import br.com.clicanicaodontologica.clinica.domain.entity.Clinica;
 import br.com.clicanicaodontologica.clinica.domain.entity.Contato;
 import br.com.clicanicaodontologica.clinica.domain.entity.Endereco;
+import br.com.clicanicaodontologica.clinica.domain.exception.NotFoundException;
 import br.com.clicanicaodontologica.clinica.domain.service.ClinicaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +34,7 @@ public class ClinicaController {
    <ClinicaResponseWrapper>
     ResponseEntity<ClinicaResponseWrapper> buscarClinicas() {
         List<Clinica> clinicas = clinicaService.buscarClinicas();
-        ClinicaResponseWrapper clinicaResponseWrapper = new ClinicaResponseWrapper();
+        ClinicaWrapperResponse clinicaResponseWrapper = new ClinicaWrapperResponse();
         clinicaResponseWrapper.setClinicas(clinicas.stream().map( clinica -> {
             ClinicaListResponse clinicaListResponse = new ClinicaListResponse();
             clinicaListResponse.setId(clinica.getId());
@@ -38,10 +42,10 @@ public class ClinicaController {
             clinicaListResponse.setNome(clinica.getNome());
             return clinicaListResponse;
         }).toList());
-        return ResponseEntity.ok(clinicaResponseWrapper);
+        return (ResponseEntity<ClinicaResponseWrapper>) ResponseEntity.ok();
     }
     @GetMapping("{id}")
-    ResponseEntity<ClinicaResponse> buscarPorId(@PathVariable UUID id) {
+    ResponseEntity<ClinicaResponse> buscarPorId(@PathVariable UUID id) throws NotFoundException {
         Clinica clinica = clinicaService.buscarClinicaPorId(id);
         ClinicaResponse response = clinicaResponseByClinica(clinica);
         return ResponseEntity.ok(response);
@@ -73,7 +77,7 @@ public class ClinicaController {
         return ResponseEntity.ok(response);
     }
     @PutMapping("{id}")
-    ResponseEntity<ClinicaResponse> atualizarClinica(@PathVariable UUID id, @RequestBody @Valid ClinicaRequest request) {
+    ResponseEntity<ClinicaResponse> atualizarClinica(@PathVariable UUID id, @RequestBody @Valid ClinicaRequest request) throws NotFoundException {
 
         Clinica clinica = clinicaService.buscarClinicaPorId(id);
         clinica.setCnpj(request.getCnpj());
@@ -101,7 +105,7 @@ public class ClinicaController {
     }
 
     @DeleteMapping("{id}")
-    ResponseEntity<Void> deletarClinica(@PathVariable UUID id) {
+    ResponseEntity<Void> deleteClinica(@PathVariable UUID id) throws NotFoundException {
         clinicaService.deletarClinica(id);
         return ResponseEntity.ok().build();
     }

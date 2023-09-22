@@ -7,8 +7,9 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class ClinicaListResponse {
+public class DentistaListResponse {
+
     private UUID id;
     private String nome;
-    private String cnpj;
+    private String cro;
 }

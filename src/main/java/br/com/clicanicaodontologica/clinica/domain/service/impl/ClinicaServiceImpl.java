@@ -1,10 +1,10 @@
 package br.com.clicanicaodontologica.clinica.domain.service.impl;
 
 import br.com.clicanicaodontologica.clinica.domain.entity.Clinica;
+import br.com.clicanicaodontologica.clinica.domain.exception.BadRequestCnpjException;
 import br.com.clicanicaodontologica.clinica.domain.exception.NotFoundException;
 import br.com.clicanicaodontologica.clinica.domain.repository.ClinicaRepository;
 import br.com.clicanicaodontologica.clinica.domain.service.ClinicaService;
-import br.com.clicanicaodontologica.clinica.exception.BadRequestCnpjException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +32,7 @@ public class ClinicaServiceImpl implements ClinicaService {
         return clinicaRepository.findAll();
     }
     @Override
-    public Clinica buscarClinicaPorId(UUID id) {
+    public Clinica buscarClinicaPorId(UUID id) throws NotFoundException {
         try{
             return clinicaRepository.findById(id).orElseThrow();
         } catch (Exception e) {
@@ -44,7 +44,7 @@ public class ClinicaServiceImpl implements ClinicaService {
         return null;
     }
     @Override
-    public Clinica atualizarClinica(UUID id, Clinica clinica) {
+    public Clinica atualizarClinica(UUID id, Clinica clinica) throws NotFoundException {
         try{
             clinicaRepository.findById(id);
         } catch (Exception e){
@@ -53,7 +53,7 @@ public class ClinicaServiceImpl implements ClinicaService {
         return clinicaRepository.save(clinica);
     }
     @Override
-    public void deletarClinica(UUID id) {
+    public void deletarClinica(UUID id) throws NotFoundException {
         try {
             clinicaRepository.findById(id).orElseThrow();
             clinicaRepository.deleteById(id);

@@ -1,15 +1,27 @@
 package br.com.clicanicaodontologica.clinica.api.controller;
 
+import br.com.clicanicaodontologica.clinica.api.dto.request.DentistaRequest;
+import br.com.clicanicaodontologica.clinica.api.dto.response.ContatoResponse;
+import br.com.clicanicaodontologica.clinica.api.dto.response.DentistaResponse;
+import br.com.clicanicaodontologica.clinica.api.dto.response.listResponse.DentistaListResponse;
+import br.com.clicanicaodontologica.clinica.api.dto.response.wrapperResponse.DentistaWrapperResponse;
 import br.com.clicanicaodontologica.clinica.domain.entity.Contato;
 import br.com.clicanicaodontologica.clinica.domain.entity.Dentista;
+import br.com.clicanicaodontologica.clinica.domain.exception.NotFoundException;
 import br.com.clicanicaodontologica.clinica.domain.service.DentistaSertvice;
 import jakarta.validation.Valid;
+import java.time.Instant;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+@RestController
+@RequestMapping("v1/dentistas")
 public class DentistaController {
     private final DentistaSertvice dentistaSertvice;
 
@@ -19,8 +31,8 @@ public class DentistaController {
     }
 
     @GetMapping
-    ResponseEntity<DentistaWrapperResponse> buscarDentistas() {
-        List<Dentista> dentistas = dentistaSertvice.buscarDentistas();
+    ResponseEntity<DentistaWrapperResponse> buscarDentista() {
+        List<Dentista> dentistas = dentistaSertvice.buscarDentista();
         DentistaWrapperResponse dentistaWrapperResponse = new DentistaWrapperResponse();
 
         dentistaWrapperResponse.setDentistas(dentistas.stream().map(dentista -> {
@@ -35,8 +47,8 @@ public class DentistaController {
     }
 
     @GetMapping("{id}")
-    ResponseEntity<DentistaResponse> buscarDentistaPorId(@PathVariable UUID id) {
-        Dentista dentista = dentistaService.buscarDentistaPorId(id);
+    ResponseEntity<DentistaResponse> buscarDentistaPorId(@PathVariable UUID id) throws NotFoundException {
+        Dentista dentista = dentistaSertvice.buscarDentistaPorId(id);
         DentistaResponse response = dentistaResponseByDentista(dentista);
         return ResponseEntity.ok(response);
     }
@@ -46,7 +58,7 @@ public class DentistaController {
         Dentista dentista = new Dentista();
         dentista.setNome(request.getNome());
         dentista.setCro(request.getCro());
-        dentista.setDataNascimento(request.getDataNascimento());
+        dentista.setDataNascimento(Instant.from(request.getDataNascimento()));
         dentista.setEspecialidade(request.getEspecialidade());
         dentista.setGenero(request.getGenero());
 
@@ -55,21 +67,21 @@ public class DentistaController {
         contato.setTelefone(request.getContato().getTelefone());
         dentista.setContato(contato);
 
-        dentista.setClinicasDentistas(request.getClinicasDentistas());
+        dentista.setClinicaDentista(request.getClinicasDentistas());
 
-        Dentista dentistaCriado = dentistaService.criarDentista(dentista);
+        Dentista dentistaCriado = dentistaSertvice.criarDentista(dentista);
         DentistaResponse response = dentistaResponseByDentista(dentistaCriado);
         return ResponseEntity.ok(response);
     }
 
     @PutMapping("{id}")
-    ResponseEntity<DentistaResponse> atualizarDentista(@PathVariable UUID id, @RequestBody DentistaRequest request) {
+    ResponseEntity<DentistaResponse> atualizarDentista(@PathVariable UUID id, @RequestBody DentistaRequest request) throws NotFoundException {
 
-        Dentista dentista = dentistaService.buscarDentistaPorId(id);
+        Dentista dentista = dentistaSertvice.buscarDentistaPorId(id);
 
         dentista.setNome(request.getNome());
         dentista.setCro(request.getCro());
-        dentista.setDataNascimento(request.getDataNascimento());
+        dentista.setDataNascimento(Instant.from(request.getDataNascimento()));
         dentista.setEspecialidade(request.getEspecialidade());
         dentista.setGenero(request.getGenero());
 
@@ -78,16 +90,16 @@ public class DentistaController {
         contato.setTelefone(request.getContato().getTelefone());
         dentista.setContato(contato);
 
-        dentista.setClinicasDentistas(request.getClinicasDentistas());
+        dentista.setClinicaDentista(request.getClinicasDentistas());
 
-        Dentista dentistaAtualizado = dentistaService.criarDentista(dentista);
+        Dentista dentistaAtualizado = dentistaSertvice.criarDentista(dentista);
         DentistaResponse response = dentistaResponseByDentista(dentistaAtualizado);
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("{id}")
-    ResponseEntity<Void> deletarDentista(@PathVariable UUID id) {
-        dentistaService.deletarDentista(id);
+    ResponseEntity<Void> deletarDentista(@PathVariable UUID id) throws NotFoundException {
+        dentistaSertvice.deleteDentista(id);
         return ResponseEntity.ok().build();
     }
 
@@ -97,7 +109,7 @@ public class DentistaController {
         dentistaResponse.setId(dentista.getId());
         dentistaResponse.setNome(dentista.getNome());
         dentistaResponse.setCro(dentista.getCro());
-        dentistaResponse.setDataNascimento(dentista.getDataNascimento());
+        dentistaResponse.setDataNascimento(LocalDate.from(dentista.getDataNascimento()));
         dentistaResponse.setEspecialidade(dentista.getEspecialidade());
         dentistaResponse.setGenero(dentista.getGenero());
         dentistaResponse.setCreatedAt(dentista.getCreatedAt());
@@ -111,7 +123,7 @@ public class DentistaController {
         contato.setUpdateAt(dentista.getContato().getUpdateAt());
 
         dentistaResponse.setContato(contato);
-        dentistaResponse.setClinicasDentistas(dentista.getClinicasDentistas());
+        dentistaResponse.setClinicasDentistas(dentista.getClinicaDentista());
 
         return dentistaResponse;
     }

@@ -1,12 +1,18 @@
 package br.com.clicanicaodontologica.clinica.api.controller;
 
+import br.com.clicanicaodontologica.clinica.api.dto.request.ConsultaRequest;
+import br.com.clicanicaodontologica.clinica.api.dto.response.ConsultaResponse;
+import br.com.clicanicaodontologica.clinica.api.dto.response.listResponse.ConsultaListResponse;
+import br.com.clicanicaodontologica.clinica.api.dto.response.wrapperResponse.ConsultaWrapperResponse;
 import br.com.clicanicaodontologica.clinica.domain.entity.Consulta;
 import br.com.clicanicaodontologica.clinica.domain.service.ConsultaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -19,7 +25,7 @@ public class ConsultaController {
         this.consultaService = consultaService;
     }
    @GetMapping
-    ResponseEntity<ConsultaWrapperResponse> buscarConsultas() {
+   ResponseEntity<ConsultaWrapperResponse> buscarConsultas() {
         List<Consulta> consultas = consultaService.buscarConsulta();
         ConsultaWrapperResponse consultaWrapperResponse = new ConsultaWrapperResponse();
 
@@ -75,7 +81,7 @@ public class ConsultaController {
     }
     @DeleteMapping("{id}")
     ResponseEntity<Void> deletarConsulta(@PathVariable UUID id) {
-        consultaService.deletarConsulta(id);
+        consultaService.deleteConsulta(id);
         return ResponseEntity.ok().build();
     }
 
@@ -91,7 +97,7 @@ public class ConsultaController {
         consultaResponse.setDataConsulta(consulta.getDataConsulta());
         consultaResponse.setCreatedAt(consulta.getCreatedAt());
         consultaResponse.setUpdateAt(consulta.getUpdateAt());
-        consultaResponse.setDescricao(consulta.getDescricacao());
+        consultaResponse.setDescricao(consulta.getDescricao());
         consultaResponse.setCancelada(consulta.getCancelada());
         consultaResponse.setMotivoCancelamento(consulta.getMotivoCancelamento());
 

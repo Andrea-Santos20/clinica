@@ -1,11 +1,18 @@
 package br.com.clicanicaodontologica.clinica.api.controller;
 
+import br.com.clicanicaodontologica.clinica.api.dto.request.PacienteRquest;
+import br.com.clicanicaodontologica.clinica.api.dto.response.ContatoResponse;
+import br.com.clicanicaodontologica.clinica.api.dto.response.EnderecoResponse;
+import br.com.clicanicaodontologica.clinica.api.dto.response.PacienteResponse;
+import br.com.clicanicaodontologica.clinica.api.dto.response.listResponse.PacienteListResponse;
+import br.com.clicanicaodontologica.clinica.api.dto.response.wrapperResponse.PacienteWrapperResponse;
 import br.com.clicanicaodontologica.clinica.domain.entity.Contato;
 import br.com.clicanicaodontologica.clinica.domain.entity.Endereco;
 import br.com.clicanicaodontologica.clinica.domain.entity.Paciente;
 import br.com.clicanicaodontologica.clinica.domain.service.PacienteService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +28,7 @@ public class PacienteController {
     }
     @GetMapping
     ResponseEntity<PacienteWrapperResponse> buscarPacientes() {
-        List<Paciente> pacientes = pacienteService.buscarPacientes();
+        List<Paciente> pacientes = pacienteService.buscarPaciente();
         PacienteWrapperResponse pacienteWrapperResponse = new PacienteWrapperResponse();
 
         pacienteWrapperResponse.setPacientes( pacientes.stream().map( paciente -> {
@@ -40,12 +47,12 @@ public class PacienteController {
         return ResponseEntity.ok(response);
     }
     @PostMapping
-    ResponseEntity<PacienteResponse> criarPaciente(@RequestBody @Valid PacienteRequest request) {
+    ResponseEntity<PacienteResponse> criarPaciente(@RequestBody @Valid PacienteRquest request) {
 
         Paciente paciente = new Paciente();
         paciente.setNome(request.getNome());
         paciente.setDataNascimento(request.getDataNascimento());
-        paciente.setSexo(request.getSexo());
+        paciente.setGenero(request.getGenero());
 
         Contato contato = new Contato();
         contato.setEmail(request.getContato().getEmail());
@@ -65,7 +72,7 @@ public class PacienteController {
         return ResponseEntity.ok(response);
     }
     @PutMapping("{id}")
-    ResponseEntity<PacienteResponse> atualizarPaciente(@PathVariable UUID id, @RequestBody @Valid PacienteRequest request) {
+    ResponseEntity<PacienteResponse> atualizarPaciente(@PathVariable UUID id, @RequestBody @Valid PacienteRquest request) {
         Paciente paciente = pacienteService.buscarPacientePorId(id);
 
         paciente.setNome(request.getNome());
@@ -90,8 +97,8 @@ public class PacienteController {
         return ResponseEntity.ok(response);
     }
     @DeleteMapping("{id}")
-    ResponseEntity<Void> deletarPaciente(@PathVariable UUID id) {
-        pacienteService.deletarPaciente(id);
+    ResponseEntity<Void> deletePaciente(@PathVariable UUID id) {
+        pacienteService.deletePaciente(id);
         return ResponseEntity.ok().build();
     }
 

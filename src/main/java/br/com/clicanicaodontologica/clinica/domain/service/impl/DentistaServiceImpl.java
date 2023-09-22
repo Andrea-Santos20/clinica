@@ -3,7 +3,7 @@ package br.com.clicanicaodontologica.clinica.domain.service.impl;
 import br.com.clicanicaodontologica.clinica.domain.entity.Dentista;
 import br.com.clicanicaodontologica.clinica.domain.repository.DentistaRepository;
 import br.com.clicanicaodontologica.clinica.domain.service.DentistaSertvice;
-import org.openqa.selenium.NotFoundException;
+import br.com.clicanicaodontologica.clinica.domain.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,34 +27,35 @@ public class DentistaServiceImpl implements DentistaSertvice {
         return dentistaRepository.findAll();
     }
     @Override
-    public Dentista buscarDentistaPorId(UUID id) {
+    public Dentista buscarDentistaPorId(UUID id) throws NotFoundException {
         try {
             return dentistaRepository.findById(id).orElseThrow();
         } catch (Exception e) {
-            throw new NotFoundException(String.valueOf(id));
+            throw new NotFoundException((id));
         }
     }
+
     @Override
     public Dentista atualizarDentista(Dentista dentista) {
         return null;
     }
 
     @Override
-    public Dentista atualizarDentista(UUID id, Dentista dentista) {
+    public Dentista atualizarDentista(UUID id, Dentista dentista) throws NotFoundException {
         try {
             dentistaRepository.findById(id);
         } catch (Exception e) {
-            throw new NotFoundException(String.valueOf(id));
+            throw new NotFoundException((id));
         }
         return dentistaRepository.save(dentista);
     }
     @Override
-    public void deleteDentista(UUID id) {
+    public void deleteDentista(UUID id) throws NotFoundException {
         try {
             dentistaRepository.findById(id).orElseThrow();
             dentistaRepository.deleteById(id);
         } catch (Exception e) {
-            throw new NotFoundException(String.valueOf(id));
+            throw new NotFoundException((id));
         }
     }
 }

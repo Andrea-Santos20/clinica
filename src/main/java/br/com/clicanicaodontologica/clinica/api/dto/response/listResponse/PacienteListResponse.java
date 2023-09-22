@@ -4,11 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.UUID;
-
 @Getter
 @Setter
-public class ClinicaListResponse {
+public class PacienteListResponse {
     private UUID id;
     private String nome;
-    private String cnpj;
 }

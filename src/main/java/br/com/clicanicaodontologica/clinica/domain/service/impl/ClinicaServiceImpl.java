@@ -5,6 +5,7 @@ import br.com.clicanicaodontologica.clinica.domain.exception.BadRequestCnpjExcep
 import br.com.clicanicaodontologica.clinica.domain.exception.NotFoundException;
 import br.com.clicanicaodontologica.clinica.domain.repository.ClinicaRepository;
 import br.com.clicanicaodontologica.clinica.domain.service.ClinicaService;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,7 @@ public class ClinicaServiceImpl implements ClinicaService {
     }
     @Override
     public Clinica criarClinica(Clinica clinica) {
-        boolean cnpjExiste = clinicaRepository.existsByCnpi(clinica.getCnpj());
+        boolean cnpjExiste = clinicaRepository.existsByCnpj(clinica.getCnpj());
         if(cnpjExiste){
                 throw new BadRequestCnpjException(clinica.getCnpj());
         }
@@ -31,8 +32,9 @@ public class ClinicaServiceImpl implements ClinicaService {
     public List<Clinica> buscarClinicas() {
         return clinicaRepository.findAll();
     }
+    @SneakyThrows
     @Override
-    public Clinica buscarClinicaPorId(UUID id) throws NotFoundException {
+    public Clinica buscarClinicaPorId(UUID id)  {
         try{
             return clinicaRepository.findById(id).orElseThrow();
         } catch (Exception e) {
@@ -43,8 +45,9 @@ public class ClinicaServiceImpl implements ClinicaService {
     public Clinica atualizarClinica(Clinica clinica) {
         return null;
     }
+    @SneakyThrows
     @Override
-    public Clinica atualizarClinica(UUID id, Clinica clinica) throws NotFoundException {
+    public Clinica atualizarClinica(UUID id, Clinica clinica) {
         try{
             clinicaRepository.findById(id);
         } catch (Exception e){
@@ -52,8 +55,9 @@ public class ClinicaServiceImpl implements ClinicaService {
         }
         return clinicaRepository.save(clinica);
     }
+    @SneakyThrows
     @Override
-    public void deletarClinica(UUID id) throws NotFoundException {
+    public void deleteClinica(UUID id)  {
         try {
             clinicaRepository.findById(id).orElseThrow();
             clinicaRepository.deleteById(id);

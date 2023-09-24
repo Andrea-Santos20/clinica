@@ -15,11 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping
+@RequestMapping("v1/pacientes")
 public class PacienteController {
     private final PacienteService pacienteService;
     @Autowired
@@ -109,15 +110,15 @@ public class PacienteController {
         pacienteResponse.setNome(paciente.getNome());
         pacienteResponse.setDataNascimento(paciente.getDataNascimento());
         pacienteResponse.setGenero(paciente.getGenero());
-        pacienteResponse.setCreatedAt(paciente.getCreatedAt());
-        pacienteResponse.setUpdateAt(paciente.getUpdateAt());
+        pacienteResponse.setCreatedAt(Instant.from(paciente.getCreatedAt()));
+        pacienteResponse.setUpdateAt(Instant.from(paciente.getUpdateAt()));
 
         ContatoResponse contato = new ContatoResponse();
         contato.setId(paciente.getContato().getId());
         contato.setEmail(paciente.getContato().getEmail());
         contato.setTelefone(paciente.getContato().getTelefone());
-        contato.setCreatedAt(paciente.getContato().getCreatedAt());
-        contato.setUpdateAt(paciente.getContato().getUpdateAt());
+        contato.setCreatedAt(Instant.from(paciente.getContato().getCreatedAt()));
+        contato.setUpdateAt(Instant.from(paciente.getContato().getUpdateAt()));
 
         EnderecoResponse endereco = new EnderecoResponse();
         endereco.setId(paciente.getEndereco().getId());
@@ -126,8 +127,8 @@ public class PacienteController {
         endereco.setCidade(paciente.getEndereco().getCidade());
         endereco.setEstado(paciente.getEndereco().getEstado());
         endereco.setCep(paciente.getEndereco().getCep());
-        endereco.setCreatedAt(paciente.getEndereco().getCreatedAt());
-        endereco.setUpdateAt(paciente.getEndereco().getUpdateAt());
+        endereco.setCreatedAt(Instant.from(paciente.getEndereco().getCreatedAt()));
+        endereco.setUpdateAt(Instant.from(paciente.getEndereco().getUpdateAt()));
 
         pacienteResponse.setContato(contato);
         pacienteResponse.setEndereco(endereco);

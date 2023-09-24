@@ -10,7 +10,6 @@ import br.com.clicanicaodontologica.clinica.domain.entity.Dentista;
 import br.com.clicanicaodontologica.clinica.domain.exception.NotFoundException;
 import br.com.clicanicaodontologica.clinica.domain.service.DentistaSertvice;
 import jakarta.validation.Valid;
-import java.time.Instant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,9 +28,8 @@ public class DentistaController {
     public DentistaController(DentistaSertvice dentistaSertvice) {
         this.dentistaSertvice = dentistaSertvice;
     }
-
     @GetMapping
-    ResponseEntity<DentistaWrapperResponse> buscarDentista() {
+    ResponseEntity<DentistaWrapperResponse> buscarDentistas() {
         List<Dentista> dentistas = dentistaSertvice.buscarDentista();
         DentistaWrapperResponse dentistaWrapperResponse = new DentistaWrapperResponse();
 
@@ -119,8 +117,8 @@ public class DentistaController {
         contato.setId(dentista.getContato().getId());
         contato.setEmail(dentista.getContato().getEmail());
         contato.setTelefone(dentista.getContato().getTelefone());
-        contato.setCreatedAt(dentista.getContato().getCreatedAt());
-        contato.setUpdateAt(dentista.getContato().getUpdateAt());
+        contato.setCreatedAt(Instant.from(dentista.getContato().getCreatedAt()));
+        contato.setUpdateAt(Instant.from(dentista.getContato().getUpdateAt()));
 
         dentistaResponse.setContato(contato);
         dentistaResponse.setClinicasDentistas(dentista.getClinicaDentista());

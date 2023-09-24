@@ -9,14 +9,14 @@ import br.com.clicanicaodontologica.clinica.domain.service.ConsultaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("v1/cpmsulta")
+@RequestMapping("v1/cpmsultas")
 public class ConsultaController {
     private final ConsultaService consultaService;
 
@@ -26,7 +26,7 @@ public class ConsultaController {
     }
    @GetMapping
    ResponseEntity<ConsultaWrapperResponse> buscarConsultas() {
-        List<Consulta> consultas = consultaService.buscarConsulta();
+        List<Consulta> consultas = consultaService.buscarConsultas();
         ConsultaWrapperResponse consultaWrapperResponse = new ConsultaWrapperResponse();
 
         consultaWrapperResponse.setConsultas( consultas.stream().map( consulta -> {
@@ -95,8 +95,8 @@ public class ConsultaController {
         consultaResponse.setClinica(consulta.getClinica());
 
         consultaResponse.setDataConsulta(consulta.getDataConsulta());
-        consultaResponse.setCreatedAt(consulta.getCreatedAt());
-        consultaResponse.setUpdateAt(consulta.getUpdateAt());
+        consultaResponse.setCreatedAt(Instant.from(consulta.getCreatedAt()));
+        consultaResponse.setUpdateAt(Instant.from(consulta.getUpdateAt()));
         consultaResponse.setDescricao(consulta.getDescricao());
         consultaResponse.setCancelada(consulta.getCancelada());
         consultaResponse.setMotivoCancelamento(consulta.getMotivoCancelamento());

@@ -1,6 +1,7 @@
 package br.com.clicanicaodontologica.clinica.api.handler;
 
 import br.com.clicanicaodontologica.clinica.domain.exception.BadRequestCnpjException;
+import br.com.clicanicaodontologica.clinica.domain.exception.BadRequestDataConsultaException;
 import org.openqa.selenium.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +19,15 @@ public class ExceptionApiHandler {
 
    @ExceptionHandler(BadRequestCnpjException.class)
     public ResponseEntity<Problema> badRequestExceptionHandler(BadRequestCnpjException e) {
-       String message = "Clínica com CNPJ já cadastrado!";
+       String message = "CNPj já existente!";
        Problema problem = new Problema(HttpStatus.BAD_REQUEST.value(), message, e.getMessage());
+        return ResponseEntity.ok().body(problem);
+    }
+
+    @ExceptionHandler(BadRequestDataConsultaException.class)
+    public ResponseEntity<Problema> badRequestCnpjException(BadRequestDataConsultaException e) {
+        String message = "Data anterior ao dia atual!";
+        Problema problem = new Problema(HttpStatus.BAD_REQUEST.value(), message, e.getMessage());
         return ResponseEntity.ok().body(problem);
     }
 }

@@ -20,7 +20,7 @@ public class ConsultaServiceImpl implements ConsultaService {
        return consultaRepository.save(consulta);
     }
     @Override
-    public List<Consulta> buscarConsulta() {
+    public List<Consulta> buscarConsultas() {
         return consultaRepository.findAll();
     }
     @Override

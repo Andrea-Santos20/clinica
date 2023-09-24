@@ -5,10 +5,12 @@ import br.com.clicanicaodontologica.clinica.domain.repository.PacienteRepository
 import br.com.clicanicaodontologica.clinica.domain.service.PacienteService;
 import org.openqa.selenium.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
+@Service
 public class PacienteServiceImpl implements PacienteService {
     private final PacienteRepository pacienteRepository;
     @Autowired
@@ -28,12 +30,8 @@ public class PacienteServiceImpl implements PacienteService {
         try {
             return pacienteRepository.findById(id).orElseThrow();
         } catch (Exception e){
-            throw new NotFoundException(String.valueOf(id));
+            throw new NotFoundException(String.valueOf((id)));
         }
-    }
-    @Override
-    public Paciente atualizarPaciente(Paciente paciente) {
-        return null;
     }
     @Override
     public Paciente atualizarPaciente(UUID id, Paciente paciente) {
@@ -44,7 +42,6 @@ public class PacienteServiceImpl implements PacienteService {
         }
         return pacienteRepository.save(paciente);
     }
-
     @Override
     public void deletePaciente(UUID id) {
         try {

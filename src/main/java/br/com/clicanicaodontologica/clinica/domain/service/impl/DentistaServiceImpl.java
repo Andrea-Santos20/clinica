@@ -34,14 +34,8 @@ public class DentistaServiceImpl implements DentistaSertvice {
             throw new NotFoundException((id));
         }
     }
-
     @Override
-    public Dentista atualizarDentista(Dentista dentista) {
-        return null;
-    }
-
-    @Override
-    public Dentista atualizarDentista(UUID id, Dentista dentista) throws NotFoundException {
+    public Dentista atualizarDentistas(UUID id, Dentista dentista) throws NotFoundException {
         try {
             dentistaRepository.findById(id);
         } catch (Exception e) {

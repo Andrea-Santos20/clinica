@@ -18,7 +18,7 @@ import java.util.UUID;
 public class Clinica {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name="id")
+    @Column(name="id", nullable = false)
     private UUID id;
     private String nome;
     @Column(length = 20, unique = true)

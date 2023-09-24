@@ -27,20 +27,17 @@ public class Dentista {
     private Instant createdAt;
     private Instant updateAt;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_contato" ,
-            referencedColumnName = "id",
-            foreignKey = @ForeignKey(
-                    name="fk_dentista_contato"))
+    @JoinColumn(name = "id_contato" , referencedColumnName = "id", foreignKey = @ForeignKey(name="fk_dentista_contato"))
     private Contato contato;
     @ManyToMany
     @JoinTable(
             name = "clinicaDentista",
-            joinColumns = @JoinColumn(name = "id_dentista"),
-            inverseJoinColumns = @JoinColumn(name = "id_clinica"),
-            foreignKey = @ForeignKey(name = "fk_clinica_dentista")
+            joinColumns = @JoinColumn(name = "id_dentista", foreignKey = @ForeignKey(name="fk_dentista_clinica")),
+            inverseJoinColumns = @JoinColumn(name = "id_clinica", foreignKey = @ForeignKey(name="fk_clinica_dentista"))
     )
 
      private Set<Clinica> clinicaDentista;
+    @PrePersist
     public void naCriacao() {
         this.createdAt = Instant.now();
     }

@@ -1,13 +1,12 @@
 package br.com.clicanicaodontologica.clinica.domain.entity;
 
 public enum GeneroEnum {
-    F("Feminino"),
-    M("Masculino");
-    private String genero;
-    GeneroEnum(String genero) {
-        this.genero = genero;
+    F("Feminino"), M("Masculino");
+    private String generoNome;
+    GeneroEnum(String generoNome) {
+        this.generoNome = generoNome;
     }
-    public String getGenero(){
-        return genero;
+    public String getGeneroNome(){
+        return generoNome;
     }
 }

@@ -9,9 +9,6 @@ public interface PacienteService {
     Paciente criarPaciente(Paciente paciente);
     List<Paciente> buscarPaciente();
     Paciente buscarPacientePorId(UUID id);
-    Paciente atualizarPaciente(Paciente paciente);
-
     Paciente atualizarPaciente(UUID id, Paciente paciente);
-
     void deletePaciente(UUID id);
 }

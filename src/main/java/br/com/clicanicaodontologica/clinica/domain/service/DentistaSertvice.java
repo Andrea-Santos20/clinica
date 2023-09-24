@@ -10,7 +10,6 @@ public interface DentistaSertvice {
    Dentista criarDentista (Dentista dentista);
     List<Dentista> buscarDentista();
     Dentista buscarDentistaPorId(UUID id) throws NotFoundException;
-    Dentista atualizarDentista(Dentista dentista);
-    Dentista atualizarDentista(UUID id, Dentista dentista) throws NotFoundException;
+    Dentista atualizarDentistas(UUID id, Dentista dentista) throws NotFoundException;
     void deleteDentista(UUID id) throws NotFoundException;
 }

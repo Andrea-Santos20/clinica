@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface ConsultaService {
     Consulta criarConsulta(Consulta consulta);
-    List<Consulta> buscarConsulta();
+    List<Consulta> buscarConsultas();
     Consulta buscarConsultaPorId(UUID id);
     Consulta atualizarConsulta(Consulta consulta);
     void deleteConsulta(UUID id);

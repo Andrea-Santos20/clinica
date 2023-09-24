@@ -1,7 +1,7 @@
 package br.com.clicanicaodontologica.clinica.api.handler;
 
-public class Problema {
+public record Problema(Integer status,
+                       String message,
+                       String detail) {
 
-    public Problema(int value, String message, String message1) {
-    }
 }

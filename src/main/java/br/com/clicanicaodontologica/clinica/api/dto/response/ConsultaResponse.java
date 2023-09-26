@@ -6,8 +6,8 @@ import br.com.clicanicaodontologica.clinica.domain.entity.Paciente;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
@@ -18,8 +18,8 @@ public class ConsultaResponse {
     private Dentista dentista;
     private Clinica clinica;
     private LocalDate dataConsulta;
-    private Instant createdAt;
-    private Instant updateAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updateAt;
     private String descricao;
     private Boolean cancelada;
     private String motivoCancelamento;

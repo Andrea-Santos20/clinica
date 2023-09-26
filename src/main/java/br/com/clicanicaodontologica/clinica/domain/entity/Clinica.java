@@ -1,10 +1,8 @@
 package br.com.clicanicaodontologica.clinica.domain.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.br.CNPJ;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -21,7 +19,7 @@ public class Clinica {
     @Column(name="id", nullable = false)
     private UUID id;
     private String nome;
-    @Column(length = 20, unique = true)
+    @Column(length = 100, unique = true)
     private String cnpj;
     private String razaoSocial;
     @Column(updatable = false)

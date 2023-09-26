@@ -1,10 +1,12 @@
 package br.com.clicanicaodontologica.clinica.domain.service.impl;
 
 import br.com.clicanicaodontologica.clinica.domain.entity.Consulta;
+import br.com.clicanicaodontologica.clinica.domain.exception.BadRequestDataConsultaException;
 import br.com.clicanicaodontologica.clinica.domain.repository.ConsultaRepository;
 import br.com.clicanicaodontologica.clinica.domain.service.ConsultaService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,6 +19,9 @@ public class ConsultaServiceImpl implements ConsultaService {
     }
     @Override
     public Consulta criarConsulta(Consulta consulta) {
+        if(consulta.getDataConsulta().isBefore(LocalDate.now())) {
+            throw new BadRequestDataConsultaException(consulta.getDataConsulta());
+        }
        return consultaRepository.save(consulta);
     }
     @Override

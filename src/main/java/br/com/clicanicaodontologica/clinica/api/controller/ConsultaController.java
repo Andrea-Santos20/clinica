@@ -11,12 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("v1/cpmsultas")
+@RequestMapping("v1/consultas")
 public class ConsultaController {
     private final ConsultaService consultaService;
 
@@ -95,8 +94,8 @@ public class ConsultaController {
         consultaResponse.setClinica(consulta.getClinica());
 
         consultaResponse.setDataConsulta(consulta.getDataConsulta());
-        consultaResponse.setCreatedAt(Instant.from(consulta.getCreatedAt()));
-        consultaResponse.setUpdateAt(Instant.from(consulta.getUpdateAt()));
+        consultaResponse.setCreatedAt(consulta.getCreatedAt());
+        consultaResponse.setUpdateAt(consulta.getUpdateAt());
         consultaResponse.setDescricao(consulta.getDescricao());
         consultaResponse.setCancelada(consulta.getCancelada());
         consultaResponse.setMotivoCancelamento(consulta.getMotivoCancelamento());

@@ -127,8 +127,8 @@ public class PacienteController {
         endereco.setCidade(paciente.getEndereco().getCidade());
         endereco.setEstado(paciente.getEndereco().getEstado());
         endereco.setCep(paciente.getEndereco().getCep());
-        endereco.setCreatedAt(Instant.from(paciente.getEndereco().getCreatedAt()));
-        endereco.setUpdateAt(Instant.from(paciente.getEndereco().getUpdateAt()));
+        endereco.setCreatedAt(paciente.getEndereco().getCreatedAt());
+        endereco.setUpdateAt(paciente.getEndereco().getUpdateAt());
 
         pacienteResponse.setContato(contato);
         pacienteResponse.setEndereco(endereco);

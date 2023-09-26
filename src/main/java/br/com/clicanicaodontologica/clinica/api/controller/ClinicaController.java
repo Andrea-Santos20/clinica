@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("v1/clinica")
+@RequestMapping("v1/clinicas")
 
 public class ClinicaController {
 
@@ -134,8 +134,8 @@ public class ClinicaController {
         endereco.setCidade(clinica.getEndereco().getCidade());
         endereco.setEstado(clinica.getEndereco().getEstado());
         endereco.setCep(clinica.getEndereco().getCep());
-        endereco.setCreatedAt(Instant.from(clinica.getEndereco().getCreatedAt()));
-        endereco.setUpdateAt(Instant.from(clinica.getEndereco().getUpdateAt()));
+        endereco.setCreatedAt(clinica.getEndereco().getCreatedAt());
+        endereco.setUpdateAt(clinica.getEndereco().getUpdateAt());
 
         clinicaResponse.setContato(contato);
         clinicaResponse.setEndereco(endereco);

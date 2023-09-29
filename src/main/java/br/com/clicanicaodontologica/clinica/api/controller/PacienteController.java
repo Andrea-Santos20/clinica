@@ -29,7 +29,7 @@ public class PacienteController {
     }
     @GetMapping
     ResponseEntity<PacienteWrapperResponse> buscarPacientes() {
-        List<Paciente> pacientes = pacienteService.buscarPaciente();
+        List<Paciente> pacientes = pacienteService.buscarPacientes();
         PacienteWrapperResponse pacienteWrapperResponse = new PacienteWrapperResponse();
 
         pacienteWrapperResponse.setPacientes( pacientes.stream().map( paciente -> {
@@ -110,8 +110,8 @@ public class PacienteController {
         pacienteResponse.setNome(paciente.getNome());
         pacienteResponse.setDataNascimento(paciente.getDataNascimento());
         pacienteResponse.setGenero(paciente.getGenero());
-        pacienteResponse.setCreatedAt(Instant.from(paciente.getCreatedAt()));
-        pacienteResponse.setUpdateAt(Instant.from(paciente.getUpdateAt()));
+        pacienteResponse.setCreatedAt(paciente.getCreatedAt());
+        pacienteResponse.setUpdateAt(paciente.getUpdateAt());
 
         ContatoResponse contato = new ContatoResponse();
         contato.setId(paciente.getContato().getId());

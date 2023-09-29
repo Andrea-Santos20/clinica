@@ -21,8 +21,9 @@ public class PacienteServiceImpl implements PacienteService {
     public Paciente criarPaciente(Paciente paciente) {
         return pacienteRepository.save(paciente);
     }
+
     @Override
-    public List<Paciente> buscarPaciente() {
+    public List<Paciente> buscarPacientes() {
         return pacienteRepository.findAll();
     }
     @Override

@@ -1,6 +1,7 @@
 package br.com.clicanicaodontologica.clinica.api.handler;
 
 import br.com.clicanicaodontologica.clinica.domain.exception.BadRequestCnpjException;
+import br.com.clicanicaodontologica.clinica.domain.exception.BadRequestContatoException;
 import br.com.clicanicaodontologica.clinica.domain.exception.BadRequestDataConsultaException;
 import org.openqa.selenium.NotFoundException;
 import org.springframework.http.HttpStatus;
@@ -14,20 +15,26 @@ public class ExceptionApiHandler {
     public ResponseEntity<Problema> notFoundExceptionHandler(NotFoundException e) {
         String message = "ID não encontrado no Sistema!";
         Problema problem = new Problema(HttpStatus.NOT_FOUND.value(), message, e.getMessage());
-        return ResponseEntity.ok().body(problem);
+        return ResponseEntity.badRequest().body(problem);
    }
 
    @ExceptionHandler(BadRequestCnpjException.class)
     public ResponseEntity<Problema> badRequestExceptionHandler(BadRequestCnpjException e) {
        String message = "CNPj já existente!";
        Problema problem = new Problema(HttpStatus.BAD_REQUEST.value(), message, e.getMessage());
-        return ResponseEntity.ok().body(problem);
+        return ResponseEntity.badRequest().body(problem);
     }
 
     @ExceptionHandler(BadRequestDataConsultaException.class)
     public ResponseEntity<Problema> badRequestCnpjException(BadRequestDataConsultaException e) {
         String message = "Data anterior ao dia atual!";
         Problema problem = new Problema(HttpStatus.BAD_REQUEST.value(), message, e.getMessage());
-        return ResponseEntity.ok().body(problem);
+        return ResponseEntity.badRequest().body(problem);
+    }
+    @ExceptionHandler(BadRequestContatoException.class)
+    public ResponseEntity<Problema> badRequestContatoException(BadRequestContatoException e){
+        String message = "Preencha pelo menos um dos campos de contato!";
+        Problema problem = new Problema(HttpStatus.BAD_REQUEST.value(), message, e.getMessage());
+        return ResponseEntity.badRequest().body(problem);
     }
 }

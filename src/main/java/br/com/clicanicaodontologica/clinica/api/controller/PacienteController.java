@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
@@ -117,8 +116,8 @@ public class PacienteController {
         contato.setId(paciente.getContato().getId());
         contato.setEmail(paciente.getContato().getEmail());
         contato.setTelefone(paciente.getContato().getTelefone());
-        contato.setCreatedAt(Instant.from(paciente.getContato().getCreatedAt()));
-        contato.setUpdateAt(Instant.from(paciente.getContato().getUpdateAt()));
+        contato.setCreatedAt(paciente.getContato().getCreatedAt());
+        contato.setUpdateAt(paciente.getContato().getUpdateAt());
 
         EnderecoResponse endereco = new EnderecoResponse();
         endereco.setId(paciente.getEndereco().getId());

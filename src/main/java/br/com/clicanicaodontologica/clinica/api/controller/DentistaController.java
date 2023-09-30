@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -56,8 +55,7 @@ public class DentistaController {
         Dentista dentista = new Dentista();
         dentista.setNome(request.getNome());
         dentista.setCro(request.getCro());
-        dentista.setDataNascimento(Instant.from(request.getDataNascimento()));
-        dentista.setEspecialidade(request.getEspecialidade());
+        dentista.setDataNascimento(request.getDataNascimento());
         dentista.setGenero(request.getGenero());
 
         Contato contato = new Contato();
@@ -79,7 +77,7 @@ public class DentistaController {
 
         dentista.setNome(request.getNome());
         dentista.setCro(request.getCro());
-        dentista.setDataNascimento(Instant.from(request.getDataNascimento()));
+        dentista.setDataNascimento(request.getDataNascimento());
         dentista.setEspecialidade(request.getEspecialidade());
         dentista.setGenero(request.getGenero());
 
@@ -117,8 +115,8 @@ public class DentistaController {
         contato.setId(dentista.getContato().getId());
         contato.setEmail(dentista.getContato().getEmail());
         contato.setTelefone(dentista.getContato().getTelefone());
-        contato.setCreatedAt(Instant.from(dentista.getContato().getCreatedAt()));
-        contato.setUpdateAt(Instant.from(dentista.getContato().getUpdateAt()));
+        contato.setCreatedAt(dentista.getContato().getCreatedAt());
+        contato.setUpdateAt(dentista.getContato().getUpdateAt());
 
         dentistaResponse.setContato(contato);
         dentistaResponse.setClinicasDentistas(dentista.getClinicaDentista());

@@ -39,7 +39,7 @@ class ProjetoClinicaApplicationTests {
 		Assertions.assertNotNull(mvc);
 	}
 	@Test
-	@DisplayName("Dado um objeto válido, quando chamamos o endpoint criar Pacientes, retornar o Objeto Mockado")
+	@DisplayName("Com um objeto válido ao chamarmos o endpoint criar Pacientes, retorne o Objeto Mockado")
 	void dadoUmObjetoValido_quandoChamamosEndpointCriarPaciente_entaoRetornarObjetoMockado() throws Exception {
 
 		PacienteRquest paciente = Fixture.PacienteFake.anyPaciente();
@@ -57,8 +57,7 @@ class ProjetoClinicaApplicationTests {
 				.andExpect(status().isOk());
 	}
 	@Test
-	@DisplayName("Dado uma lista vazia, quando chamamos o endpoint buscar Pacientes, retornar uma lista vazia")
-	<T>
+	@DisplayName("Ao chamarmos um endpoint buscar Pacientes, retorne uma lista vazia")
 	void dadoUmaListaVazia_quandoChamamosEndpointBuscarPacientes_entaoRetornarListaVazia() throws Exception {
 		Mockito.when(pacienteService.buscarPacientes())
 				.thenReturn(new ArrayList<>());

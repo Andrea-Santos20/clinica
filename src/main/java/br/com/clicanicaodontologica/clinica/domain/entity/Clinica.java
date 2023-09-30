@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 ;
@@ -23,8 +23,8 @@ public class Clinica {
     private String cnpj;
     private String razaoSocial;
     @Column(updatable = false)
-    private Instant createdAt;
-    private Instant updateAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updateAt;
     private String descricao;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_endereco" ,
@@ -39,11 +39,11 @@ public class Clinica {
 
     @PrePersist
     public void naCriacao() {
-        this.createdAt = Instant.now();
+        this.createdAt = LocalDateTime.now();
     }
     @PreUpdate
     public void naAtualizacao() {
-        this.updateAt = Instant.now();
+        this.updateAt = LocalDateTime.now();
     }
 
 }

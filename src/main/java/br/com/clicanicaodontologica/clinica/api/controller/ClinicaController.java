@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
@@ -42,7 +41,7 @@ public class ClinicaController {
             clinicaListResponse.setNome(clinica.getNome());
             return clinicaListResponse;
         }).toList());
-        return (ResponseEntity<ClinicaWrapperResponse>) ResponseEntity.ok();
+        return ResponseEntity.ok(clinicaWrapperResponse);
     }
     @GetMapping("{id}")
     ResponseEntity<ClinicaResponse> buscarPorId(@PathVariable UUID id) throws NotFoundException {
@@ -101,7 +100,6 @@ public class ClinicaController {
         Clinica clinicaAtualizada = clinicaService.atualizarClinica(id, clinica);
         ClinicaResponse response = clinicaResponseByClinica(clinicaAtualizada);
         return ResponseEntity.ok(response);
-
     }
 
     @DeleteMapping("{id}")
@@ -124,8 +122,8 @@ public class ClinicaController {
         contato.setId(clinica.getContato().getId());
         contato.setEmail(clinica.getContato().getEmail());
         contato.setTelefone(clinica.getContato().getTelefone());
-        contato.setCreatedAt(Instant.from(clinica.getContato().getCreatedAt()));
-        contato.setUpdateAt(Instant.from(clinica.getContato().getUpdateAt()));
+        contato.setCreatedAt(clinica.getContato().getCreatedAt());
+        contato.setUpdateAt(clinica.getContato().getUpdateAt());
 
         EnderecoResponse endereco = new EnderecoResponse();
         endereco.setId(clinica.getEndereco().getId());

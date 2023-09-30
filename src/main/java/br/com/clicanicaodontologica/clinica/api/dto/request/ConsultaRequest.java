@@ -22,7 +22,7 @@ public class ConsultaRequest {
     @NotNull
     private LocalDate dataConsulta;
     @NotEmpty
-    private String descricacao;
+    private String descricao;
     @NotNull
     private Boolean cancelada;
     private String motivoCancelamento;

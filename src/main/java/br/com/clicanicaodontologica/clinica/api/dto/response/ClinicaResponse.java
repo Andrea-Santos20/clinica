@@ -3,7 +3,7 @@ package br.com.clicanicaodontologica.clinica.api.dto.response;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
@@ -13,8 +13,8 @@ public class ClinicaResponse {
     private String nome;
     private String cnpj;
     private String razaoSocial;
-    private Instant createdAt;
-    private Instant updateAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updateAt;
     private String descricao;
     private EnderecoResponse endereco;
     private ContatoResponse contato;
